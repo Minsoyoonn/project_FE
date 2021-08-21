@@ -1,0 +1,59 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "extends": [
+    "react-app",
+    "plugin:react/recommended",
+    "airbnb",
+    "prettier"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "prettier"
+  ],
+  "rules": {
+    "no-nested-ternary": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "react/state-in-constructor": "off",
+    "react/prop-types": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-alert": "off",
+    "import/order": "off",
+    "import/no-unresolved": "off",
+    "react/prefer-stateless-function": "off",
+    "prefer-template": "off",
+    "no-unneeded-ternary": "off",
+    "no-useless-escape": "off",
+    "prefer-destructuring": "off",
+    "no-unused-vars": "off"
+  }
+}
