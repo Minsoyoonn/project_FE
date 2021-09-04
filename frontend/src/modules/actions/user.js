@@ -6,6 +6,7 @@ export const initState = {
   logOutLoading: false,
   logOutDone: false,
   logOutError: null,
+  emailVerifyLoading: false,
   emailVerify: false,
   signUpLoading: false,
   signUpDone: false,
@@ -87,15 +88,17 @@ const user = (state = initState, action) => {
       };
     case EMAIL_VERIFY_REQUEST:
       return {
-        emailVerify: false,
+        emailVerifyLoading: true,
       };
     case EMAIL_VERIFY_SUCCESS:
       return {
         emailVerify: true,
+        emailVerifyLoading: false,
       };
     case EMAIL_VERIFY_FAILURE:
       return {
-        emailVERIFY: false,
+        emailVerify: false,
+        emailVerifyLoading: false,
       };
     case SIGN_UP_REQUEST:
       return {

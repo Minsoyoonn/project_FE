@@ -27,12 +27,12 @@
   ],
   "rules": {
     "no-nested-ternary": "off",
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
-    ],
+  "prettier/prettier": "off", /*[
+    "error",
+    {
+      "endOfLine": "auto"
+    }
+    ],*/
     "react/jsx-filename-extension": [
       1,
       {

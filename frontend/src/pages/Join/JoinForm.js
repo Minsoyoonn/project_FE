@@ -19,50 +19,82 @@ const JoinForm = () => {
   const [pwdState, setPwdState] = useState(false);
   const [pwdCheck, setPwdCheck] = useState(false);
   const [error, setError] = useState('');
+
+  /* verifyBtn - 버튼 눌림 확인
+* emailCondition - @ 포함 확인
+* emailVerify - api 호출 결과값
+* emailVerifyLoading - api 호출 로딩 후 */
   const [verifyBtn, setVerifyBtn] = useState(false);
+  const [emailCondition , setEmailCondition] = useState(true);
   const { emailVerify } = useSelector((state) => ({
     emailVerify: state.user.emailVerify,
+  }));
+  const { emailVerifyLoading } = useSelector((state)=> ({
+    emailVerifyLoading : state.user.emailVerifyLoading
   }));
 
   const history = useHistory();
 
+  const onChangeEmailFunc = (e) => {
+    onChangeEmail(e);
+    setVerifyBtn(false);
+  };
+
   const onCheckEmail = (e) => {
-    const result = e.target.value;
     e.preventDefault();
-    dispatch(emailVerifyRequestAction({ result }));
-    setVerifyBtn(!verifyBtn);
+    setVerifyBtn(true);
+    if (email.indexOf('@') === -1) {
+      setEmailCondition(false);
+    } else {
+      dispatch(emailVerifyRequestAction({email}));
+      setEmailCondition(true);
+    }
   };
 
   const onChangePwd = (e) => {
-    debounce(() => {
-      if (e.target.value.length === 0) {
-        return;
-      }
-      if (e.target.value.length < 8 || e.target.value.length > 20) {
+      if (e.target.value.length === 0 || e.target.value.length < 8 || e.target.value.length > 20) {
         setError('영문, 숫자, 특수문자 조합의 8~20자리 입니다.');
+        setPwdState(false);
         return;
       }
       if (regExpPwd(e.target.value)) {
         setError('비밀번호 조건 충족');
         setPwdState(true);
       }
-    }, 1000);
     setPassword(e.target.value);
   };
 
   const onCheckPwd = (e) => {
     const currentPwd = e.target.value;
     if (currentPwd === password) {
-      setPwdCheck(!pwdCheck);
+        setPwdCheck(true);
+    } else {
+        setPwdCheck(false);
     }
   };
 
   const onSignup = (e) => {
     e.preventDefault();
-    if (!emailVerify) {
+    if(email.length === 0 || name.length === 0 || password.length === 0 || history.length === 0) {
+      alert('필수입력사항을 채워주세요.');
+      return;
+    }
+
+    if (email.indexOf('@') === -1) {
+      alert('이메일에 "@"이 포함되야 합니다.');
+      return;
+    }
+
+    if (!verifyBtn || !emailVerify) {
       alert('이메일 중복확인을 해주세요.');
       return;
     }
+
+    if(!pwdCheck) {
+      alert('비밀번호가 불일치합니다.');
+      return;
+    }
+
     if (pwdState) {
       const userId = email;
       dispatch(signupRequestAction({ userId, email, name, password, history }));
@@ -91,12 +123,13 @@ const JoinForm = () => {
               <UserInfoInput
                 type="email"
                 className={`${classes.userInfoInput}`}
-                onChange={onChangeEmail}
+                onChange={onChangeEmailFunc}
               />
               <span style={{ marginLeft: 15 }}>
-                {verifyBtn && emailVerify && '사용 가능'}
-                {verifyBtn && !emailVerify && '사용 불가능'}
-                <Button className={`${classes.emailChkBtn}`} onClick={onCheckEmail}>
+                {verifyBtn && !emailCondition && '이메일에는 @이 포함되야 합니다. 사용 불가능'}
+                {verifyBtn && emailCondition && emailVerify && !emailVerifyLoading && '사용 가능'}
+                {verifyBtn && emailCondition && !emailVerify && !emailVerifyLoading && '사용 불가능'}
+                <Button className={`${classes.emailChkBtn}`} onClick={onCheckEmail} disabled={email.length === 0}>
                   중복확인
                 </Button>
               </span>

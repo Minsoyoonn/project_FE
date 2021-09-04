@@ -126,7 +126,8 @@ function* signUp(action) {
         type: SIGN_UP_FAILURE,
         data: result.data,
       });
-      alert('회원가입에 실패했습니다.');
+      console.log(result.data)
+      alert('회원가입에 실패했습니다.'+ result.data.data.split(":")[1]);
     }
   } catch (err) {
     console.error(err);

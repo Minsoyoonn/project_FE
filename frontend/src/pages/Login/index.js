@@ -98,7 +98,7 @@ const Login = () => {
             로그인
           </Button>
           <Button variant="outlined" color="primary">
-            <Link to="/join">회원가입</Link>
+            <Link href="/join">회원가입</Link>
           </Button>
         </LoginWrapper>
       </LoginContainer>
