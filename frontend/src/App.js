@@ -1,9 +1,6 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
 import ModalProvider from './modalProvider/modalProvider';
-import reduxStore from './modules/configureStore';
 // import AuthRoute from './pages/Auth/AuthRoute';
 import Main from './pages/Main';
 import Login from './pages/Login';
@@ -20,7 +17,6 @@ import DefaultLayout from './layouts/DefaultLayout';
 
 function App() {
   return (
-    <Provider store={reduxStore}>
       <Router>
         <ModalProvider />
         <DefaultLayout>
@@ -45,7 +41,6 @@ function App() {
           <Route exact path="/my-page/upload" component={Upload} />
         </DefaultLayout>
       </Router>
-    </Provider>
   );
 }
 

@@ -18,5 +18,8 @@ const rootReducer = combineReducers({
 export function* rootSaga() {
   yield all([fork(fetchUserSaga), fork(reqFileUploadSaga), fork(getListSaga)]); // all 은 배열 안의 여러 사가를 동시에 실행시켜줍니다.
 }
+// authSaga는 어디에??? fetauthSaga 추가? 아님 저기 어디에 해당???
+
+
 
 export default rootReducer;

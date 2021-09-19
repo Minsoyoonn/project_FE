@@ -92,6 +92,7 @@ export const handleAsyncActions = (type, key, keepData = false) => {
 export const handleAsyncActionsById = (type, key, keepData = false) => {
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
   return (state, action) => {
+    // eslint-disable-next-line react/destructuring-assignment
     const id = action.meta;
     switch (action.type) {
       case type:

@@ -15,23 +15,32 @@ const JoinForm = () => {
   const dispatch = useDispatch();
   const [email, onChangeEmail] = useInput('');
   const [name, onChangeName] = useInput('');
+  
   const [password, setPassword] = useState('');
   const [pwdState, setPwdState] = useState(false);
   const [pwdCheck, setPwdCheck] = useState(false);
   const [error, setError] = useState('');
 
-  /* verifyBtn - 버튼 눌림 확인
+
+/* verifyBtn - 버튼 눌림 확인
 * emailCondition - @ 포함 확인
 * emailVerify - api 호출 결과값
 * emailVerifyLoading - api 호출 로딩 후 */
   const [verifyBtn, setVerifyBtn] = useState(false);
+  const [verifyBtn2, setVerifyBtn2] = useState(false);
+  const [verifyBtn3, setVerifyBtn3] = useState(false);
   const [emailCondition , setEmailCondition] = useState(true);
+
+
+
   const { emailVerify } = useSelector((state) => ({
     emailVerify: state.user.emailVerify,
   }));
   const { emailVerifyLoading } = useSelector((state)=> ({
     emailVerifyLoading : state.user.emailVerifyLoading
   }));
+
+
 
   const history = useHistory();
 
@@ -51,6 +60,44 @@ const JoinForm = () => {
     }
   };
 
+  const [usingemail, setusingemail] =useState(false); // 인증번호가 맞아서 가입이 가능한가?
+  const [ number, setnumber] = useState(''); // 보내진 인증번호
+  const [ inputnumber, setinputnumber] = useInput(''); // 내가 입력한 인증번호
+  // number 와 inputnumber가 동일해야함
+// 인증번호 전송 기능
+
+  const onRequestVerifyNumber = (e) => {
+    e.preventDefault();
+    setVerifyBtn3(true);
+    const data = {onChangeEmail}
+    fetch('/user/verify/{key}', {
+      method: "post",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(json => {
+      setnumber(json.number) // 보내진 인증번호
+    })};
+  
+
+
+  const onChangeVerifyNumberFunc=(e)=> {
+    setinputnumber(e);
+    setVerifyBtn2(false);
+  }
+
+  const onSubmit= (e)=> {
+      e.preventDefault();
+      setVerifyBtn2(true);
+      if(number === inputnumber){
+        setusingemail(true);
+      }
+    }
+
+
+
+  
   const onChangePwd = (e) => {
       if (e.target.value.length === 0 || e.target.value.length < 8 || e.target.value.length > 20) {
         setError('영문, 숫자, 특수문자 조합의 8~20자리 입니다.');
@@ -97,7 +144,7 @@ const JoinForm = () => {
 
     if (pwdState) {
       const userId = email;
-      dispatch(signupRequestAction({ userId, email, name, password, history }));
+      dispatch(signupRequestAction({ userId, email, inputnumber, name, password, history }));
     }
   };
 
@@ -132,8 +179,33 @@ const JoinForm = () => {
                 <Button className={`${classes.emailChkBtn}`} onClick={onCheckEmail} disabled={email.length === 0}>
                   중복확인
                 </Button>
+                <span> </span>
+                <span style={{ marginLeft: 15 }}>
+                {verifyBtn3 && '전송'}
+                <Button className={`${classes.emailChkBtn}`} onClick={onRequestVerifyNumber} >
+                    인증번호 전송
+                </Button>
+                </span>
               </span>
             </UserInfoFieldWrapper>
+
+            <UserInfoFieldWrapper>
+            <span style={{ width: 130 }}>
+                <TextDefault width="100px" size="16px" color="#000000">
+                  <span>이메일 인증번호</span>
+                </TextDefault>
+            </span>
+            <UserInfoInput className={`${classes.userInfoInput}`} 
+              onChange={onChangeVerifyNumberFunc} />
+            <span style={{ marginLeft: 15 }}>
+              {verifyBtn2 && usingemail && '인증이 성공했습니다'}
+              {verifyBtn2 && !usingemail && '인증이 실패했습니다'}
+              <Button className={`${classes.emailChkBtn}`} onClick={onSubmit} >
+                    인증번호 확인
+              </Button>
+            </span>
+            </UserInfoFieldWrapper>
+            
 
             <UserInfoFieldWrapper>
               <span style={{ width: 130 }}>

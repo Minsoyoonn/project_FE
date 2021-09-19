@@ -27,22 +27,14 @@
   ],
   "rules": {
     "no-nested-ternary": "off",
-  "prettier/prettier": "off", /*[
-    "error",
-    {
-      "endOfLine": "auto"
-    }
-    ],*/
+    "prettier/prettier": "off",
     "react/jsx-filename-extension": [
-      1,
-      {
+      1,{
         "extensions": [
           ".js",
-          ".jsx"
-        ]
+          ".jsx"]
       }
     ],
-    "react/state-in-constructor": "off",
     "react/prop-types": "off",
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
