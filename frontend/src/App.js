@@ -14,33 +14,41 @@ import DownloadHistory from './pages/DownloadHistory';
 import UploadHistory from './pages/UploadHistory';
 import Upload from './pages/Upload';
 import DefaultLayout from './layouts/DefaultLayout';
+import { useDispatch } from 'react-redux';
+import { getMeRequestAction } from './modules/actions/user';
 
 function App() {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getMeRequestAction());
+  }, [dispatch]);
+
   return (
-      <Router>
-        <ModalProvider />
-        <DefaultLayout>
-          {/* <AuthRoute exact path="/blockfish" type="private">
+    <Router>
+      <ModalProvider />
+      <DefaultLayout>
+        {/* <AuthRoute exact path="/blockfish" type="private">
         <Main />
         </AuthRoute> */}
-          <Route exact path="/blockfish" component={Main} />
-          <Route exact path="/blockfish/download" component={Download} />
-          <Route path="/blockfish/download/detail/:id" component={DownloadDetail} />
-          <Route path="/login" component={Login} />
-          <Route path="/join" component={Join} />
-          <Route path="/join-form" component={JoinForm} />
-          {/* <AuthRoute exact path="/my-page" type="guest">
+        <Route exact path="/blockfish" component={Main} />
+        <Route exact path="/blockfish/download" component={Download} />
+        <Route path="/blockfish/download/detail/:id" component={DownloadDetail} />
+        <Route path="/login" component={Login} />
+        <Route path="/join" component={Join} />
+        <Route path="/join-form" component={JoinForm} />
+        {/* <AuthRoute exact path="/my-page" type="guest">
           <MyPage />
         </AuthRoute> */}
-          <Route exact path="/my-page" component={MyPage} />
-          <Route exact path="/my-page/userinfo" component={UserInfo} />
-          <Route exact path="/my-page/review" component={UserInfo} />
-          <Route exact path="/my-page/withdrawal" component={UserInfo} />
-          <Route exact path="/my-page/history/download" component={DownloadHistory} />
-          <Route exact path="/my-page/history/upload" component={UploadHistory} />
-          <Route exact path="/my-page/upload" component={Upload} />
-        </DefaultLayout>
-      </Router>
+        <Route exact path="/my-page" component={MyPage} />
+        <Route exact path="/my-page/userinfo" component={UserInfo} />
+        <Route exact path="/my-page/review" component={UserInfo} />
+        <Route exact path="/my-page/withdrawal" component={UserInfo} />
+        <Route exact path="/my-page/history/download" component={DownloadHistory} />
+        <Route exact path="/my-page/history/upload" component={UploadHistory} />
+        <Route exact path="/my-page/upload" component={Upload} />
+      </DefaultLayout>
+    </Router>
   );
 }
 

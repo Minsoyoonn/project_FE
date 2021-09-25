@@ -15,32 +15,25 @@ const JoinForm = () => {
   const dispatch = useDispatch();
   const [email, onChangeEmail] = useInput('');
   const [name, onChangeName] = useInput('');
-  
+
   const [password, setPassword] = useState('');
-  const [pwdState, setPwdState] = useState(false);
-  const [pwdCheck, setPwdCheck] = useState(false);
+  const [pwdState, setPwdState] = useState(true);
+  const [pwdCheck, setPwdCheck] = useState(true);
   const [error, setError] = useState('');
 
-
-/* verifyBtn - 버튼 눌림 확인
-* emailCondition - @ 포함 확인
-* emailVerify - api 호출 결과값
-* emailVerifyLoading - api 호출 로딩 후 */
+  /* verifyBtn - 버튼 눌림 확인
+   * emailCondition - @ 포함 확인
+   * emailVerify - api 호출 결과값
+   * emailVerifyLoading - api 호출 로딩 후 */
   const [verifyBtn, setVerifyBtn] = useState(false);
-  const [verifyBtn2, setVerifyBtn2] = useState(false);
-  const [verifyBtn3, setVerifyBtn3] = useState(false);
-  const [emailCondition , setEmailCondition] = useState(true);
-
-
+  const [emailCondition, setEmailCondition] = useState(true);
 
   const { emailVerify } = useSelector((state) => ({
     emailVerify: state.user.emailVerify,
   }));
-  const { emailVerifyLoading } = useSelector((state)=> ({
-    emailVerifyLoading : state.user.emailVerifyLoading
+  const { emailVerifyLoading } = useSelector((state) => ({
+    emailVerifyLoading: state.user.emailVerifyLoading,
   }));
-
-
 
   const history = useHistory();
 
@@ -55,74 +48,40 @@ const JoinForm = () => {
     if (email.indexOf('@') === -1) {
       setEmailCondition(false);
     } else {
-      dispatch(emailVerifyRequestAction({email}));
+      dispatch(emailVerifyRequestAction({ email }));
       setEmailCondition(true);
     }
   };
 
-  const [usingemail, setusingemail] =useState(false); // 인증번호가 맞아서 가입이 가능한가?
-  const [ number, setnumber] = useState(''); // 보내진 인증번호
-  const [ inputnumber, setinputnumber] = useInput(''); // 내가 입력한 인증번호
-  // number 와 inputnumber가 동일해야함
-// 인증번호 전송 기능
+  const [url, seturl] = useState('');
 
-  const onRequestVerifyNumber = (e) => {
-    e.preventDefault();
-    setVerifyBtn3(true);
-    const data = {onChangeEmail}
-    fetch('/user/verify/{key}', {
-      method: "post",
-      headers: { "Content-Type": "application/json"},
-      body: JSON.stringify(data),
-    })
-    .then(res => res.json())
-    .then(json => {
-      setnumber(json.number) // 보내진 인증번호
-    })};
-  
+  // url 클릭시 로그인 페이지로 전송
 
-
-  const onChangeVerifyNumberFunc=(e)=> {
-    setinputnumber(e);
-    setVerifyBtn2(false);
-  }
-
-  const onSubmit= (e)=> {
-      e.preventDefault();
-      setVerifyBtn2(true);
-      if(number === inputnumber){
-        setusingemail(true);
-      }
-    }
-
-
-
-  
   const onChangePwd = (e) => {
-      if (e.target.value.length === 0 || e.target.value.length < 8 || e.target.value.length > 20) {
-        setError('영문, 숫자, 특수문자 조합의 8~20자리 입니다.');
-        setPwdState(false);
-        return;
-      }
-      if (regExpPwd(e.target.value)) {
-        setError('비밀번호 조건 충족');
-        setPwdState(true);
-      }
+    if (e.target.value.length === 0 || e.target.value.length < 8 || e.target.value.length > 20) {
+      setError('영문, 숫자, 특수문자 조합의 8~20자리 입니다.');
+      setPwdState(false);
+      return;
+    }
+    if (regExpPwd(e.target.value)) {
+      setError('비밀번호 조건 충족');
+      setPwdState(true);
+    }
     setPassword(e.target.value);
   };
 
   const onCheckPwd = (e) => {
     const currentPwd = e.target.value;
     if (currentPwd === password) {
-        setPwdCheck(true);
+      setPwdCheck(true);
     } else {
-        setPwdCheck(false);
+      setPwdCheck(false);
     }
   };
-
-  const onSignup = (e) => {
+  // 가입하기
+  const handleSignup = (e) => {
     e.preventDefault();
-    if(email.length === 0 || name.length === 0 || password.length === 0 || history.length === 0) {
+    if (email.length === 0 || name.length === 0 || password.length === 0 || history.length === 0) {
       alert('필수입력사항을 채워주세요.');
       return;
     }
@@ -137,15 +96,15 @@ const JoinForm = () => {
       return;
     }
 
-    if(!pwdCheck) {
+    if (!pwdCheck) {
       alert('비밀번호가 불일치합니다.');
       return;
     }
 
     if (pwdState) {
       const userId = email;
-      dispatch(signupRequestAction({ userId, email, inputnumber, name, password, history }));
-    }
+      dispatch(signupRequestAction({ userId, email, name, password, history }));
+    } // 컴포넌트가 처음 렌더링 될 때, 초기화함
   };
 
   return (
@@ -160,7 +119,7 @@ const JoinForm = () => {
           </TextDefault>
         </span>
         <div>
-          <form style={{ marginTop: 40 }} noValidate autoComplete="off" onSubmit={onSignup}>
+          <form style={{ marginTop: 40 }} noValidate autoComplete="off" onSubmit={handleSignup}>
             <UserInfoFieldWrapper>
               <span style={{ width: 130 }}>
                 <TextDefault width="100px" size="16px" color="#000000">
@@ -175,38 +134,20 @@ const JoinForm = () => {
               <span style={{ marginLeft: 15 }}>
                 {verifyBtn && !emailCondition && '이메일에는 @이 포함되야 합니다. 사용 불가능'}
                 {verifyBtn && emailCondition && emailVerify && !emailVerifyLoading && '사용 가능'}
-                {verifyBtn && emailCondition && !emailVerify && !emailVerifyLoading && '사용 불가능'}
-                <Button className={`${classes.emailChkBtn}`} onClick={onCheckEmail} disabled={email.length === 0}>
+                {verifyBtn &&
+                  emailCondition &&
+                  !emailVerify &&
+                  !emailVerifyLoading &&
+                  '사용 불가능'}
+                <Button
+                  className={`${classes.emailChkBtn}`}
+                  onClick={onCheckEmail}
+                  disabled={email.length === 0}
+                >
                   중복확인
                 </Button>
-                <span> </span>
-                <span style={{ marginLeft: 15 }}>
-                {verifyBtn3 && '전송'}
-                <Button className={`${classes.emailChkBtn}`} onClick={onRequestVerifyNumber} >
-                    인증번호 전송
-                </Button>
-                </span>
               </span>
             </UserInfoFieldWrapper>
-
-            <UserInfoFieldWrapper>
-            <span style={{ width: 130 }}>
-                <TextDefault width="100px" size="16px" color="#000000">
-                  <span>이메일 인증번호</span>
-                </TextDefault>
-            </span>
-            <UserInfoInput className={`${classes.userInfoInput}`} 
-              onChange={onChangeVerifyNumberFunc} />
-            <span style={{ marginLeft: 15 }}>
-              {verifyBtn2 && usingemail && '인증이 성공했습니다'}
-              {verifyBtn2 && !usingemail && '인증이 실패했습니다'}
-              <Button className={`${classes.emailChkBtn}`} onClick={onSubmit} >
-                    인증번호 확인
-              </Button>
-            </span>
-            </UserInfoFieldWrapper>
-            
-
             <UserInfoFieldWrapper>
               <span style={{ width: 130 }}>
                 <TextDefault width="100px" size="16px" color="#000000">
@@ -215,7 +156,6 @@ const JoinForm = () => {
               </span>
               <UserInfoInput className={`${classes.userInfoInput}`} onChange={onChangeName} />
             </UserInfoFieldWrapper>
-
             <UserInfoFieldWrapper>
               <span style={{ width: 130 }}>
                 <TextDefault size="16px" color="#000000">
@@ -235,7 +175,6 @@ const JoinForm = () => {
                 </span>
               )}
             </UserInfoFieldWrapper>
-
             <UserInfoFieldWrapper>
               <span style={{ width: 130 }}>
                 <TextDefault size="16px" color="#000000">

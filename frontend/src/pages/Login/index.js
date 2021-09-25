@@ -27,12 +27,14 @@ const Login = () => {
   const [remembered, setRemembered] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['rememberEmail']);
   const history = useHistory();
+
   useEffect(() => {
     if (cookies.rememberEmail !== undefined) {
       onChangeEmail(cookies.rememberEmail);
       setRemembered(true);
     }
   }, []);
+
   const handleChange = (e) => {
     setRemembered(e.target.check);
     if (e.target.check) {

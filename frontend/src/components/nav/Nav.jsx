@@ -29,6 +29,7 @@ const Nav = () => {
   };
   const onClickLogout = () => {
     // 쿠키 제거 또는 로그아웃 API 연동 필요
+    window.localStorage.removeItem('jwt');
     window.localStorage.removeItem('user');
     dispatch(logoutRequestAction());
     alert('로그아웃 되었습니다');
