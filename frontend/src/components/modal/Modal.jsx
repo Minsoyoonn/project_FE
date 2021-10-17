@@ -25,11 +25,11 @@ const Modal = (props) => {
   };
 
   return (
-    <>
+    <div>
       <ModalOverlay data-key="overlay" onClick={onClickBackground}>
         {children}
       </ModalOverlay>
-    </>
+    </div>
   );
 };
 

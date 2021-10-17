@@ -11,6 +11,7 @@ const DownloadDetail = (props) => {
   const [downloadId, setDownloadId] = useState(match.params.id);
 
   useEffect(() => {
+    console.log(props);
     // API 호출
     console.log('match.params', match.params.id);
 

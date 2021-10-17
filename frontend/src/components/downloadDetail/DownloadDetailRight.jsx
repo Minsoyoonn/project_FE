@@ -8,13 +8,14 @@ import {
 } from '../../styles/DownloadDetail';
 import { useStyles } from '../../styles/materialsStyle';
 import TextDefault from '../ui/TextDefault';
+import onBackupSubmit from '../../modules/reducers/fileDownload';
 
 const DownloadDetailRight = () => {
   const classes = useStyles();
 
   return (
-    <div>
-      <Button className={`${classes.downloadBtn}`}>무료 다운로드</Button>
+    <>
+      <Button className={`${classes.downloadBtn}`} onClick={onBackupSubmit}>무료 다운로드</Button>
       <DnldDetailContentWrapper>
         <ul>
           <DnldDetailItem>
@@ -143,7 +144,7 @@ const DownloadDetailRight = () => {
           </RelativeItemContainer>
         </ul>
       </DnldDetailContentWrapper>
-    </div>
+    </>
   );
 };
 

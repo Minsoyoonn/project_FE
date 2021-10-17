@@ -26,6 +26,7 @@ const Text = styled.span`
   font-weight: ${(props) => props.weight};
   line-height: ${(props) => props.lineHeight};
   letter-spacing: ${(props) => props.letterSpacing};
+  white-space: pre-wrap;
   & span:after {
     content: '*';
     size: 16px;

@@ -1,7 +1,8 @@
-{
+{  
   "env": {
     "browser": true,
     "es6": true
+
   },
   "parser": "babel-eslint",
   "extends": [
@@ -46,6 +47,7 @@
     "no-unneeded-ternary": "off",
     "no-useless-escape": "off",
     "prefer-destructuring": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "import/no-extraneous-dependencies" : ["error", {"devDependencies": true}]
   }
 }

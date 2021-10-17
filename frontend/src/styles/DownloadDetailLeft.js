@@ -25,6 +25,13 @@ export const DetailDescBarItem = styled.li`
     opacity: 0.5;
   }
 `;
+export const imgPosition = styled.div`
+  position: absolutes;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-left: 30px;
+`;
 export const ReviewContainer = styled.div`
   margin-top: 15px;
   margin-bottom: 40px;

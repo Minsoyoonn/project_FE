@@ -28,7 +28,7 @@ const MyPageLayout = (props) => {
   }, []);
 
   return (
-    <>
+    <div>
       <MyPageListContainer>
         <MyPageListItems>
           <MyPageListItem viewState={listState[0]}>
@@ -96,7 +96,7 @@ const MyPageLayout = (props) => {
         {children}
       </MyPageContentContainer>
       {/* 마이페이지 컨텐트 - 끝 */}
-    </>
+    </div>
   );
 };
 

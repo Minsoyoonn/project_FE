@@ -6,6 +6,9 @@ export const initState = {
   logOutLoading: false,
   logOutDone: false,
   logOutError: null,
+  getmeLoading: false,
+  getmeDone: false,
+  getmeError: null,
   emailVerifyLoading: false,
   emailVerify: false,
   VerifyRequest: false,
@@ -103,26 +106,26 @@ const user = (state = initState, action) => {
       return {
         ...state,
         isAuthUser: true,
-        logInLoading: true,
-        logInDone: false,
-        logInError: null,
+        getmeLoading: true,
+        getmeDone: false,
+        getmeError: null,
       };
     case GET_ME_SUCCESS:
       return {
         ...state,
         user: action.data,
         isAuthUser: true,
-        logInLoading: false,
-        logInDone: true,
-        logInError: null,
+        getmeLoading: false,
+        getmeDone: true,
+        getmeError: null,
       };
     case GET_ME_FAILURE:
       return {
         ...state,
         isAuthUser: true,
-        logInLoading: false,
-        logInDone: true,
-        logInError: action.error,
+        getmeLoading: false,
+        getmeDone: true,
+        getmeError: action.error,
       };
     case LOG_OUT_REQUEST:
       return {

@@ -4,6 +4,7 @@ import {
   DetailDescBarItem,
   DetailDescBarItems,
   DetailTitleWrapper,
+  imgPosition,
 } from '../../styles/DownloadDetailLeft';
 import HalfRating from '../ui/HalfRating';
 import TextDefault from '../ui/TextDefault';
@@ -52,10 +53,10 @@ const DownloadDetailLeft = () => {
   };
 
   return (
-    <div>
+    <>
       {/* 타이틀 Wrapper - 시작 */}
       <DetailTitleWrapper>
-        <img alt="" src="/images/card/empty.png" width="70" />
+        <img alt="" src="/utorrent.jpg" width="70" />
         <div>
           <TextDefault size="26px" weight="bold" color="#808080">
             uTorrent
@@ -71,24 +72,23 @@ const DownloadDetailLeft = () => {
               </TextDefault>
               <TextDefault size="14px" color="#808080">
                 )
-              </TextDefault>
+              </TextDefault> 
             </div>
           </div>
+          <TextDefault size="14px" color="#808080">
+          P2P파일 공유, 멀티 다운로드가 가능하며, 작은 시스템 점유율과 파일 앱, 다운시 빠른 재설정
+          등을 활용할 수 있는 프로그램입니다.
+          </TextDefault>
         </div>
         <TextDefault size="18px" weight="700" color="#00bfff">
           Free
         </TextDefault>
+        <imgPosition>
+          <img src="http://18.118.194.242/image_upload.PNG" alt="" width="400px" height="250px" />
+        </imgPosition>
       </DetailTitleWrapper>
       {/* 타이틀 Wrapper - 끝 */}
 
-      {/* 컨텐츠 Wrapper - 시작 */}
-      <DetailContentWrapper>
-        <TextDefault size="16px" color="#222222">
-          P2P파일 공유, 멀티 다운로드가 가능하며, 작은 시스템 점유율과 파일 앱, 다운시 빠른 재설정
-          등을 활용할 수 있는 프로그램입니다.
-        </TextDefault>
-      </DetailContentWrapper>
-      {/* 컨텐츠 Wrapper - 끝 */}
 
       {/* 컨텐츠 하단 설명 bar - 시작 */}
       <DetailDescBarItems>
@@ -113,7 +113,7 @@ const DownloadDetailLeft = () => {
       {/* 컨텐츠 하단 설명 - 시작 */}
       {makeContent()}
       {/* 컨텐츠 하단 설명 - 끝 */}
-    </div>
+  </>
   );
 };
 

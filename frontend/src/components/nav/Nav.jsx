@@ -28,7 +28,6 @@ const Nav = () => {
     dispatch(openModal('SEARCH_MODAL', {}));
   };
   const onClickLogout = () => {
-    // 쿠키 제거 또는 로그아웃 API 연동 필요
     window.localStorage.removeItem('jwt');
     window.localStorage.removeItem('user');
     dispatch(logoutRequestAction());
@@ -52,12 +51,12 @@ const Nav = () => {
           <NavTopBarUl>
             <NavTopBarLi>
               {!isEmpty(user) ? (
-                <>
+                <div>
                   <TextDefault size="15px" color="#eee" lineHeight="35px" onClick={onClickLogout}>
                     로그아웃
                   </TextDefault>
                   <NavTopBarUnderLine />
-                </>
+                </div>
               ) : (
                 <Link to="/login">
                   <TextDefault size="15px" color="#eee" lineHeight="35px">

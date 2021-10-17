@@ -219,7 +219,7 @@ function* signUp(action) {
       });
       alert('회원가입 성공했습니다.');
       link.push('/login');
-      yield call(VerifyRequestAPI, action);
+      // yield call(VerifyRequestAPI, action.data);
     } else {
       yield put({
         type: SIGN_UP_FAILURE,

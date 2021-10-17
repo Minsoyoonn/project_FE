@@ -53,8 +53,6 @@ const JoinForm = () => {
     }
   };
 
-  const [url, seturl] = useState('');
-
   // url 클릭시 로그인 페이지로 전송
 
   const onChangePwd = (e) => {
